@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
   res.send('it is working');
 })
 
-app.post('https://secret-crag-71418.herokuapp.com/signin', (req, res) => {
+app.post('/signin', (req, res) => {
   db.select('email', 'hash').from('login').where('email', '=', req.body.email).then(data => {
     const isValid = bcrypt.compareSync(req.body.password, data[0].hash);
     if (isValid) {
@@ -34,7 +34,7 @@ app.post('https://secret-crag-71418.herokuapp.com/signin', (req, res) => {
   }).catch(err => res.status(400).json('wrong credentials'));
 })
 
-app.post('https://secret-crag-71418.herokuapp.com/register', (req, res) => {
+app.post('/register', (req, res) => {
   const { email,name,password } = req.body;
   const hash = bcrypt.hashSync(password);
 
@@ -55,7 +55,7 @@ app.post('https://secret-crag-71418.herokuapp.com/register', (req, res) => {
 
 })
 
-app.get('https://secret-crag-71418.herokuapp.com/profile/:id', (req, res) => {
+app.get('/profile/:id', (req, res) => {
   const { id } = req.params;
 
   db.select('*').from('users').where({
